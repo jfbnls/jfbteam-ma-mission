@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculateur de neutralité plastique</title>
+<style>
+  :root{
+    --bg:#ffffff;
+    --surface:#f6f7f4;
+    --border:#e3e5df;
+    --navy:#1d2b45;
+    --green:#4f7d52;
+    --terracotta:#c8703f;
+    --text:#1a1a1a;
+    --muted:#5c5c5c;
+    --error:#a33a1f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Segoe UI',Arial,sans-serif;
+    line-height:1.5;
+  }
+  .wrap{max-width:640px;margin:0 auto;padding:0 20px 60px;}
+
+  .hero-body{padding:40px 20px 4px;text-align:center;}
+  .hero-body p.tag{
+    color:var(--muted);font-size:14px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:14px;
+  }
+  h1{font-size:22px;margin-bottom:6px;color:var(--navy);}
+  h2{font-size:16px;font-weight:400;margin-bottom:14px;color:var(--muted);}
+  p{color:var(--muted);font-size:15px;margin-bottom:16px;}
+
+  .btn{
+    display:inline-block;background:var(--green);color:#fff;font-weight:700;
+    padding:14px 28px;border:2px solid var(--green);border-radius:8px;font-size:16px;cursor:pointer;
+    width:100%;text-align:center;text-decoration:none;font-family:inherit;
+  }
+  .btn:active{transform:scale(.98);}
+  .btn:focus-visible{outline:3px solid var(--navy);outline-offset:2px;}
+  .btn:disabled{opacity:.6;cursor:wait;}
+  .btn-outline{background:transparent;color:var(--green);}
+  .center{padding:0 20px 8px;text-align:center;}
+
+  /* CALCULATEUR */
+  .calc-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:12px;
+    padding:24px 20px;margin:24px 0;
+  }
+  .field{margin-bottom:18px;}
+  .field label{
+    display:block;font-size:13px;font-weight:700;color:var(--navy);
+    text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;
+  }
+  .field input{
+    width:100%;padding:12px 14px;font-size:18px;border:1px solid var(--border);
+    border-radius:8px;background:#fff;color:var(--text);font-family:inherit;
+  }
+  .field input:focus{outline:2px solid var(--green);outline-offset:1px;}
+  .field .hint{color:var(--muted);font-size:13px;margin-top:6px;}
+
+  .result{
+    border-top:1px solid var(--border);margin-top:18px;padding-top:18px;
+  }
+  .result-row{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding:8px 0;font-size:15px;color:var(--muted);
+  }
+  .result-row strong{color:var(--text);font-weight:700;}
+  .result-final{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding:14px 0 4px;border-top:1px dashed var(--border);margin-top:6px;
+  }
+  .result-final .label{font-size:15px;color:var(--navy);font-weight:700;}
+  .result-final .value{font-size:28px;color:var(--green);font-weight:700;}
+  .result-note{font-size:13px;color:var(--muted);margin-top:10px;}
+
+  /* CAPTURE DE CONTACT */
+  .lead{
+    border-top:1px solid var(--border);margin-top:20px;padding-top:20px;
+  }
+  .lead h3{font-size:17px;color:var(--navy);margin-bottom:4px;}
+  .lead > p, .lead form > p.intro{margin-bottom:14px;}
+  .lead .field{margin-bottom:12px;}
+  .lead .field input{font-size:16px;padding:11px 14px;}
+  .lead .opt{font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+  .consent{font-size:12px;color:var(--muted);margin:10px 0 0;}
+  .consent a{color:var(--muted);}
+  .msg-error{color:var(--error);font-size:13px;min-height:18px;margin-top:8px;}
+  .thanks h3{margin-bottom:6px;}
+  .thanks p{margin-bottom:14px;}
+
+  footer{text-align:center;color:var(--muted);font-size:12px;padding:30px 0 10px;}
+  footer a{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="hero-body">
+    <p class="tag">Neutralité plastique</p>
+    <h1>Une personne produit 50 kg de déchets plastiques par an.</h1>
+    <h2>Un pack à 100 € retire 250 kg de plastique réel, mesuré, tracé. Soit 5 ans de neutralité. Entre ton âge, on calcule le reste.</h2>
+  </div>
+
+  <div class="calc-card">
+    <div class="field">
+      <label for="age">Ton âge</label>
+      <input type="number" id="age" min="1" max="79" placeholder="Ex : 45" inputmode="numeric">
+      <div class="hint">Espérance de vie moyenne retenue : 80 ans.</div>
+    </div>
+
+    <div class="result" id="result" style="display:none;">
+      <div class="result-row"><span>Années restantes à couvrir</span><strong id="years"></strong></div>
+      <div class="result-row"><span>Déchets plastiques à venir</span><strong id="kg"></strong></div>
+      <div class="result-final">
+        <span class="label">Packs nécessaires</span>
+        <span class="value" id="packs"></span>
+      </div>
+      <div class="result-row"><span>Coût total</span><strong id="cost"></strong></div>
+      <div class="result-note" id="note"></div>
+    </div>
+
+    <!-- Capture de contact : apparaît avec le résultat -->
+    <div class="lead" id="lead" style="display:none;">
+
+      <form id="lead-form" novalidate>
+        <h3>Envie d'en parler ?</h3>
+        <p class="intro">Laisse-moi ton prénom et ton email. Je te réponds moi-même.</p>
+
+        <div class="field">
+          <label for="prenom">Prénom</label>
+          <input type="text" id="prenom" name="prenom" autocomplete="given-name" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" inputmode="email" required>
+        </div>
+        <div class="field">
+          <label for="telephone">Téléphone <span class="opt">(facultatif)</span></label>
+          <input type="tel" id="telephone" name="telephone" autocomplete="tel" inputmode="tel">
+        </div>
+
+        <!-- Champ piège anti-spam : les humains ne le voient pas -->
+        <div class="hp" aria-hidden="true">
+          <label for="site">Ne pas remplir</label>
+          <input type="text" id="site" name="site" tabindex="-1" autocomplete="off">
+        </div>
+
+        <button type="submit" class="btn" id="send">Être recontacté</button>
+        <div class="msg-error" id="error" role="alert"></div>
+        <p class="consent">En envoyant ce formulaire, tu acceptes que je te recontacte. Voir la <a href="/corsairconnect/confidentialite">politique de confidentialité</a>.</p>
+      </form>
+
+      <div class="thanks" id="thanks" style="display:none;" aria-live="polite">
+        <h3 id="thanks-title"></h3>
+        <p>C'est noté, je reviens vers toi. Si tu préfères choisir ton créneau tout de suite :</p>
+        <a class="btn" href="https://calendly.com/badierjf/30min" target="_blank" rel="noopener">Réserver un échange</a>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="center">
+    <p>Ces packs ne sont que des éléments d'une communauté compensée : chacun finance un peu, et ensemble on retire vraiment le plastique du monde.</p>
+    <a class="btn btn-outline" id="cta-bottom" href="https://calendly.com/badierjf/30min" target="_blank" rel="noopener">Réserver un échange</a>
+  </div>
+
+</div>
+
+<footer>Transformer la planète — Pour un avenir sans plastique · <a href="/corsairconnect/confidentialite">Politique de confidentialité</a> · <a href="/corsairconnect/mentions-legales">Mentions légales</a></footer>
+
+<script>
+  const KG_PAR_AN = 50;
+  const KG_PAR_PACK = 250;
+  const PRIX_PACK = 100;
+  const ESPERANCE_VIE = 80;
+
+  // Webhook Apps Script (feuille Leads CorsairConnect)
+  const WEBHOOK = 'https://script.google.com/macros/s/AKfycbybLDZsXHON6s8v1_PqpF8XB8qnQDeP9NCefX2vmrXz5-PukQY32F6m3JxY7o21LUFp3uw/exec';
+
+  const ageInput = document.getElementById('age');
+  const result = document.getElementById('result');
+  const lead = document.getElementById('lead');
+
+  let dernierAge = null;
+  let derniersPacks = null;
+
+  ageInput.addEventListener('input', () => {
+    const age = parseInt(ageInput.value, 10);
+
+    if (!age || age <= 0) {
+      result.style.display = 'none';
+      lead.style.display = 'none';
+      return;
+    }
+
+    if (age >= ESPERANCE_VIE) {
+      result.style.display = 'block';
+      lead.style.display = 'none';
+      document.getElementById('years').textContent = '0 an';
+      document.getElementById('kg').textContent = '0 kg';
+      document.getElementById('packs').textContent = '0';
+      document.getElementById('cost').textContent = '0 €';
+      document.getElementById('note').textContent = "Au-delà de l'espérance de vie moyenne retenue (80 ans), le calcul ne s'applique plus.";
+      return;
+    }
+
+    const anneesRestantes = ESPERANCE_VIE - age;
+    const kgRestants = anneesRestantes * KG_PAR_AN;
+    const packs = Math.ceil(kgRestants / KG_PAR_PACK);
+    const cout = packs * PRIX_PACK;
+    const kgCouverts = packs * KG_PAR_PACK;
+
+    dernierAge = age;
+    derniersPacks = packs;
+
+    result.style.display = 'block';
+    lead.style.display = 'block';
+    document.getElementById('years').textContent = anneesRestantes + ' ans';
+    document.getElementById('kg').textContent = kgRestants.toLocaleString('fr-FR') + ' kg';
+    document.getElementById('packs').textContent = packs;
+    document.getElementById('cost').textContent = cout.toLocaleString('fr-FR') + ' €';
+    document.getElementById('note').textContent =
+      packs + ' pack' + (packs > 1 ? 's' : '') + ' retire' + (packs > 1 ? 'nt' : '') + ' ' +
+      kgCouverts.toLocaleString('fr-FR') + ' kg — de quoi être neutre en plastique pour le reste de ta vie.';
+  });
+
+  /* ---- Envoi du contact ---- */
+
+  // Envoi par balise image : contourne le blocage CORS d'Apps Script depuis GitHub Pages.
+  // Aucune réponse n'est lue : on confirme visuellement, la vérité est dans la Sheet.
+  function envoyerAuWebhook(params) {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = img.onerror = resolve;
+      img.src = WEBHOOK + '?' + new URLSearchParams(params).toString();
+      setTimeout(resolve, 5000);
+    });
+  }
+
+  const form = document.getElementById('lead-form');
+  const sendBtn = document.getElementById('send');
+  const errorBox = document.getElementById('error');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorBox.textContent = '';
+
+    const prenom = document.getElementById('prenom').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const telephone = document.getElementById('telephone').value.trim();
+    const piege = document.getElementById('site').value;
+
+    if (!prenom) {
+      errorBox.textContent = 'Indique ton prénom.';
+      document.getElementById('prenom').focus();
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+      errorBox.textContent = "Cet email n'a pas l'air valide. Vérifie-le.";
+      document.getElementById('email').focus();
+      return;
+    }
+
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Envoi…';
+
+    // Un robot a rempli le champ piège : on fait comme si, sans rien envoyer.
+    if (!piege) {
+      await envoyerAuWebhook({
+        prenom: prenom,
+        email: email,
+        telephone: telephone,
+        source: 'neutralite',
+        age: dernierAge || '',
+        packs: derniersPacks || ''
+      });
+    }
+
+    form.style.display = 'none';
+    document.getElementById('thanks-title').textContent = 'Merci ' + prenom + '.';
+    document.getElementById('thanks').style.display = 'block';
+    document.getElementById('cta-bottom').style.display = 'none';
+  });
+</script>
+
+</body>
+</html>
