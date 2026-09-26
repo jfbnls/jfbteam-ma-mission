@@ -1,0 +1,11 @@
+Pèse-Plastique — mise en ligne sur jfbteam-ma-mission.fr
+
+1. Dans ton dépôt GitHub du site jfbteam-ma-mission.fr, crée un dossier "pese-plastique".
+2. Dépose-y les 7 fichiers : index.html, manifest.json, sw.js, icon-180.png, icon-192.png, icon-512.png (et ce LISEZ-MOI si tu veux).
+3. Commit. Attends 1 à 2 minutes que GitHub Pages publie.
+4. Ouvre https://jfbteam-ma-mission.fr/pese-plastique/ sur ton téléphone.
+   - Android (Chrome) : menu ⋮ > "Installer l'application".
+   - iPhone (Safari) : Partager > "Sur l'écran d'accueil".
+
+Ton index.html à la racine (le tunnel) n'est pas touché.
+Après une modification, change "v1" en "v2" dans sw.js pour que les téléphones prennent la nouvelle version.
