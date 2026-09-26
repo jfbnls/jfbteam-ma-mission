@@ -92,6 +92,24 @@ details p{margin:0;max-width:65ch}
 .caution{border-left:3px solid var(--warn);padding-left:12px;color:var(--ink)}
 .hyp{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:15px}
 .install{font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;display:flex;flex-direction:column;gap:6px}
+
+.lead{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 16px;display:flex;flex-direction:column;gap:14px}
+.lead p{margin:0;color:var(--muted)}
+.lead form{display:flex;flex-direction:column;gap:12px}
+.lead .f{display:flex;flex-direction:column;gap:4px}
+.lead label{font-weight:600;font-size:15px}
+.lead .opt{font-weight:400;color:var(--muted)}
+.lead input{font:16px var(--body);padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);width:100%}
+.lead input:focus-visible{outline:2px solid var(--oil);outline-offset:1px}
+.recap{font-family:var(--mono);font-size:13px;color:var(--petrol);background:var(--plastic-soft);border-radius:8px;padding:8px 12px}
+.btn{display:block;width:100%;text-align:center;text-decoration:none;font:700 16px var(--body);padding:14px 20px;border-radius:10px;border:2px solid var(--oil);background:var(--oil);color:#1A1204;cursor:pointer}
+.btn:disabled{opacity:.6;cursor:wait}
+.btn-outline{background:transparent;color:var(--ink)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.consent{font-size:12px!important}
+.consent a,.legal a{color:var(--muted)}
+.err{color:var(--warn);font-size:14px;min-height:18px}
+.legal{font-size:12px;color:var(--muted);text-align:center}
 footer{font-size:15px}
 footer p{margin:0}
 @media (prefers-reduced-motion:no-preference){ .big{transition:color .2s} }
@@ -193,6 +211,28 @@ footer p{margin:0}
     <p class="say" id="c-say"></p>
   </section>
 
+  <section class="lead" id="lead" aria-labelledby="lead-title">
+    <h2 id="lead-title">Tu veux en savoir plus ?</h2>
+    <form id="lead-form" novalidate>
+      <p>Laisse-moi ton prénom et ton email. Je t'envoie l'info et je te réponds moi-même.</p>
+      <div class="recap" id="recap"></div>
+      <div class="f"><label for="prenom">Prénom</label><input type="text" id="prenom" name="prenom" autocomplete="given-name" required></div>
+      <div class="f"><label for="email">Email</label><input type="email" id="email" name="email" autocomplete="email" inputmode="email" required></div>
+      <div class="f"><label for="telephone">Téléphone <span class="opt">(facultatif)</span></label><input type="tel" id="telephone" name="telephone" autocomplete="tel" inputmode="tel"></div>
+      <div class="hp" aria-hidden="true"><label for="site">Ne pas remplir</label><input type="text" id="site" name="site" tabindex="-1" autocomplete="off"></div>
+      <button type="submit" class="btn" id="send">Recevoir l'info</button>
+      <div class="err" id="error" role="alert"></div>
+      <p class="consent">En envoyant ce formulaire, tu acceptes que je te recontacte. Voir la <a href="/corsairconnect/confidentialite">politique de confidentialité</a>.</p>
+    </form>
+    <div id="thanks" hidden aria-live="polite">
+      <h3 id="thanks-title" style="margin-bottom:6px"></h3>
+      <p style="margin-bottom:14px">C'est noté, je t'envoie l'info. Si tu préfères qu'on en parle de vive voix, choisis ton créneau :</p>
+      <a class="btn" id="thanks-cal" href="https://calendly.com/badierjf/30min" target="_blank" rel="noopener">Réserver un échange</a>
+    </div>
+  </section>
+
+  <a class="btn btn-outline" id="cta-bottom" href="https://calendly.com/badierjf/30min" target="_blank" rel="noopener">Réserver un échange de 30 min</a>
+
   <section class="context">
     <h2>Le contexte</h2>
     <details open>
@@ -241,6 +281,7 @@ footer p{margin:0}
   <footer>
     <p>Une question sur ton calcul ? Écris-moi. Jean-François, JFBTeam.</p>
   </footer>
+  <p class="legal">Transformer la planète · <a href="/corsairconnect/confidentialite">Politique de confidentialité</a> · <a href="/corsairconnect/mentions-legales">Mentions légales</a></p>
 
   <div class="install">
     <b>L'avoir sur ton téléphone</b>
@@ -342,7 +383,56 @@ footer p{margin:0}
   }
   ['c-n','c-eur'].forEach(function(id){ $(id).addEventListener('input', ensemble); });
 
-  empreinte(); pack(); ensemble();
+  // ---- Contact : même webhook et même logique que l'ancienne page ----
+  var WEBHOOK = 'https://script.google.com/macros/s/AKfycbw3R3__BWsSfFcY7BAQ3xWJ97_ZnJ8n1EcWROJyONEkSzCySEWBmRBhDmZU4NTv3ue4-Q/exec';
+  function simulation(){
+    var tab = document.querySelector('.tabs button[aria-selected="true"]').id;
+    if (tab === 't-pack'){ var e=+$('k-eur').value; return {onglet:'pack', euros:e, kg:e*KG_PER_EUR}; }
+    if (tab === 't-ensemble'){ var n=+$('c-n').value, c=+$('c-eur').value; return {onglet:'ensemble', euros:c, kg:n*c*KG_PER_EUR, personnes:n}; }
+    var p=+$('e-pers').value, a=+$('e-ans').value, k=+$('e-kg').value, kgT=p*a*k;
+    return {onglet:'empreinte', euros:Math.ceil(kgT/KG_PER_EUR/100)*100, kg:kgT, personnes:p};
+  }
+  function recap(){
+    var s = simulation();
+    $('recap').textContent = 'Ta simulation : ' + kg(s.kg) + ' · pack de ' + eur(s.euros) + (s.onglet==='ensemble' ? ' × ' + nf.format(s.personnes) + ' personnes' : '');
+  }
+  document.querySelectorAll('input[type=range], .tabs button, #k-chips button').forEach(function(el){
+    el.addEventListener(el.tagName==='INPUT'?'input':'click', recap);
+  });
+  function envoyerAuWebhook(params){
+    return new Promise(function(resolve){
+      var img = new Image();
+      img.onload = img.onerror = resolve;
+      img.src = WEBHOOK + '?' + new URLSearchParams(params).toString();
+      setTimeout(resolve, 5000);
+    });
+  }
+  $('lead-form').addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var err = $('error'); err.textContent = '';
+    var prenom = $('prenom').value.trim(), email = $('email').value.trim(), tel = $('telephone').value.trim();
+    if (!prenom){ err.textContent = 'Indique ton prénom.'; $('prenom').focus(); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){ err.textContent = "Cet email n'a pas l'air valide. Vérifie-le."; $('email').focus(); return; }
+    $('send').disabled = true; $('send').textContent = 'Envoi…';
+    var s = simulation();
+    var go = $('site').value ? Promise.resolve() : envoyerAuWebhook({
+      prenom: prenom, email: email, telephone: tel,
+      source: 'pese-plastique-' + s.onglet,
+      age: '',
+      packs: Math.round(s.euros/100),
+      neutralite: kg(s.kg)
+    });
+    go.then(function(){
+      var cal = new URLSearchParams({ name: prenom, first_name: prenom, email: email });
+      $('thanks-cal').href = 'https://calendly.com/badierjf/30min?' + cal.toString();
+      $('lead-form').hidden = true;
+      $('thanks-title').textContent = 'Merci ' + prenom + '.';
+      $('thanks').hidden = false;
+      $('cta-bottom').hidden = true;
+    });
+  });
+
+  empreinte(); pack(); ensemble(); recap();
 })();
 </script>
 <script>
