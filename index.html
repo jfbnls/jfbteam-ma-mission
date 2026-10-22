@@ -1,12 +1,10 @@
 <!doctype html>
 <html lang="fr">
 <head>
- <script defer src="https://cloud.umami.is/script.js" data-website-id="49e05859-6636-4e0a-bd40-b7b315f3d51c"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>JFBTeam - Ma Mission : Assainir pour mieux vivre ensemble</title>
 <meta name="description" content="La tâche est immense. Notre impact est infime. On commence quand même. Pèse ton plastique et découvre la neutralité plastique avec preuve CSR26.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <style>
 :root{--sand:#F6F3EE;--ink:#141414;--green:#0F6D5E;--green2:#E6F2EF;--line:#E8E2D9}
 *{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--sand);color:var(--ink);line-height:1.6}
@@ -27,11 +25,14 @@ input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12
 .result{margin-top:16px;padding:16px;background:var(--green2);border-radius:14px}
 .result b{font-size:22px}
 section{max-width:1100px;margin:0 auto;padding:32px 24px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:800px){.steps{grid-template-columns:1fr}}
 .story{columns:2;column-gap:48px}
 @media(max-width:800px){.story{columns:1}}
 .pill{display:inline-block;padding:6px 12px;border-radius:999px;background:var(--green2);color:var(--green);font-size:12px;font-weight:700}
 footer{border-top:1px solid var(--line);padding:32px 24px;text-align:center;color:#777;font-size:13px}
 </style>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="49e05859-6636-4e0a-bd40-b7b315f3d51c"></script>
 </head>
 <body>
 <header>
@@ -46,9 +47,7 @@ footer{border-top:1px solid var(--line);padding:32px 24px;text-align:center;colo
 
 <p class="lead">Je m'appelle Jean-François. Depuis tout jeune j'ai la fibre écologie. Depuis 7 ans je suis le dossier plastique. 91% nous échappe. J'ai trouvé un système qui ne triche pas : on finance kilo par kilo, avec preuve blockchain. Je l'utilise moi-même, je te l'explique en 20 minutes.</p>
 
-<p style="font-size:11px;color:#888;margin-top:10px;text-align:center">Ce simulateur ne calcule aucun gain. Le prix d'un crédit peut monter comme baisser.</p>
-</div>
- <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap">
+<div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap">
 <a href="#peser" class="btn btn-green" style="width:auto;padding:14px 28px">Pèse ton plastique →</a>
 <a href="#comment" style="align-self:center">Comment ça marche ?</a>
 </div>
@@ -77,7 +76,7 @@ footer{border-top:1px solid var(--line);padding:32px 24px;text-align:center;colo
 
 <section id="comment">
 <h2>Comment marche un pack ?</h2>
-<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+<div class="steps">
 <div class="card"><div class="pill">1</div><h3>Tu finances</h3><p>Tu achètes un pack de retrait. 100€ financent le retrait de 250kg de plastique. C'est toi qui déclenches la dépollution.</p></div>
 <div class="card"><div class="pill">2</div><h3>Corsair agit</h3><p>Usines à Nonthaburi (Bangkok) et Finlande : transformation par pyrolyse en huile, revendue aux industriels pour refaire du plastique sans pétrole brut.</p></div>
 <div class="card"><div class="pill">3</div><h3>Tu reçois la preuve</h3><p>Pour chaque commande, reçu numérique traçable : le crédit plastique CSR26. 10 CSR = 1kg. Inscrit sur blockchain, inviolable.</p></div>
@@ -89,7 +88,7 @@ footer{border-top:1px solid var(--line);padding:32px 24px;text-align:center;colo
 <div class="story">
 <p>Dans certains pays (Inde, Philippines, Corée), la loi oblige les producteurs à compenser leur plastique (REP). La Banque mondiale a émis 100M$ d'obligations liées aux crédits plastiques.</p>
 <p>D'après Corsair, l'offre de crédits reste très faible face aux besoins. Corsair consacre une part de ses revenus au rachat de ses propres crédits sur le marché.</p>
-<p><b>Hypothèses du calcul :</b> 1€ = 2,5kg • 5% au départ, 95% sur 24 mois • 50kg/pers/an par défaut • Pack arrondi à la centaine au-dessus • Montants en euros.</p>
+<p><b>Hypothèses du calcul :</b> 1€ = 2,5kg • 5% au départ, 15% à 6 mois, 30% à 1 an, 50% à 2 ans • 50kg/pers/an par défaut • Pack arrondi à la centaine au-dessus • Montants en euros.</p>
 <p><b>Pour des particuliers qui me ressemblent :</b> qui veulent assainir la planète pour mieux vivre ensemble. Pas besoin d'être parfait, juste de commencer.</p>
 </div>
 </section>
@@ -103,9 +102,8 @@ footer{border-top:1px solid var(--line);padding:32px 24px;text-align:center;colo
 </section>
 
 <footer>
-
-Transformer la planète · <a href="confidentialite.html">Politique de confidentialité</a> ·
-<a href="mentions-legales.html">Mentions légales</a>
+<p>Transformer la planète · <a href="confidentialite.html">Politique de confidentialité</a> · <a href="mentions-legales.html">Mentions légales</a></p>
+</footer>
 
 <script>
 function calc(){
