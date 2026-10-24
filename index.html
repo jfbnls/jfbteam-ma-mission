@@ -51,7 +51,7 @@ figcaption{font-size:.85rem;color:var(--muted);margin-top:8px}
 .calc{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:28px;box-shadow:0 8px 24px rgba(20,35,43,.07)}
 .fields{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:18px 0}
 label{display:block;font-size:.9rem;font-weight:700;margin-bottom:6px}
-input[type=number],input[type=text],input[type=email]{width:100%;padding:13px;font-size:1.05rem;border:1px solid #b9ae95;border-radius:8px;background:#fff;font-family:inherit;color:var(--ink)}
+input[type=number],input[type=text],input[type=email],input[type=tel]{width:100%;padding:13px;font-size:1.05rem;border:1px solid #b9ae95;border-radius:8px;background:#fff;font-family:inherit;color:var(--ink)}
 input:focus{outline:3px solid #f2b890;border-color:var(--accent)}
 .result{margin-top:8px;padding:22px;background:var(--sand);border-radius:10px}
 .result .big{font-family:'Fraunces',serif;font-size:2.4rem;font-weight:700;color:var(--sea-dark);line-height:1}
@@ -138,13 +138,13 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:14px 26px;justify-content:space-bet
     <div class="calc">
       <div class="fields">
         <div><label for="p">Personnes dans le foyer</label><input id="p" type="number" min="1" max="20" value="2" inputmode="numeric"></div>
-        <div><label for="y">Sur combien d'années</label><input id="y" type="number" min="1" max="80" value="10" inputmode="numeric"></div>
+        <div><label for="a">Ton âge (je compte jusqu'à 80 ans)</label><input id="a" type="number" min="1" max="79" value="55" inputmode="numeric"></div>
         <div><label for="k">Plastique par personne et par an (kg)</label><input id="k" type="number" min="1" max="300" value="50" inputmode="numeric"></div>
       </div>
 
       <div class="result">
         <div class="big"><span id="kg">1 000</span> <small>kg de plastique</small></div>
-        <p id="packline">Pour le compenser, il faudrait un pack de <strong id="pack">400 €</strong> (1 € finance le retrait de 2,5 kg).</p>
+        <p id="packline">Pour le compenser, il faudrait <strong id="pack">4 packs de 100 €</strong> (soit <span id="euros">400 €</span>). 1 € finance le retrait de 2,5 kg.</p>
       </div>
 
       <div class="ask" id="ask">
@@ -154,6 +154,9 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:14px 26px;justify-content:space-bet
           <div class="row">
             <div><label for="prenom">Ton prénom</label><input id="prenom" type="text" autocomplete="given-name" required></div>
             <div><label for="email">Ton email</label><input id="email" type="email" autocomplete="email" required></div>
+          </div>
+          <div class="row">
+            <div><label for="tel">Ton téléphone <span style="font-weight:400;color:var(--muted)">(facultatif, si tu préfères que je t'appelle)</span></label><input id="tel" type="tel" autocomplete="tel" inputmode="tel"></div>
           </div>
           <button class="btn" type="submit" id="send">Envoie-moi mon ticket</button>
           <p class="fine" style="margin-top:12px">Je t'écris moi-même, pas un robot. Tes données restent chez moi. <a href="confidentialite.html">Politique de confidentialité</a>.</p>
@@ -258,7 +261,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:14px 26px;justify-content:space-bet
   // Vidéo : colle ici l'identifiant YouTube (la partie après v=). Laisse vide tant que la vidéo n'est pas prête.
   var YT_ID = 'DYfC5sywTFY';
   // Webhook Apps Script : à vérifier (déploiement qui alimente neutralité, age, packs).
-  var WEBHOOK = 'https://script.google.com/macros/s/AKfycbycR1G7ewSYzP2qDYfVq807RIe_3yEK-m2CDe6sjUyvdRVat9EQd9BtSvR9_89GBPlFtw/exec';
+  var WEBHOOK = 'https://script.google.com/macros/s/AKfycbw3R3__BWsSfFcY7BAQ3xWJ97_ZnJ8n1EcWROJyONEkSzCySEWBmRBhDmZU4NTv3ue4-Q/exec';
   // =======================
 
   var $ = function(id){return document.getElementById(id)};
@@ -272,15 +275,17 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:14px 26px;justify-content:space-bet
   var state = {kg:0, years:0, persons:0, pack:0};
   function calc(){
     var p = Math.max(1, +$('p').value || 1);
-    var y = Math.max(1, +$('y').value || 1);
+    var a = Math.min(79, Math.max(1, Math.round(+$('a').value) || 1));
+    var y = 80 - a;
     var k = Math.max(1, +$('k').value || 1);
     var kg = Math.round(p * y * k);
-    var pack = Math.max(100, Math.ceil(kg / 2.5 / 100) * 100);
-    state = {kg:kg, years:y, persons:p, pack:pack};
+    var packs = Math.max(1, Math.ceil(kg / 250)); // 1 pack = 100 € = 250 kg
+    state = {kg:kg, years:y, age:a, persons:p, packs:packs, euros:packs * 100};
     $('kg').textContent = nf.format(kg);
-    $('pack').textContent = nf.format(pack) + ' €';
+    $('pack').textContent = packs + (packs > 1 ? ' packs' : ' pack') + ' de 100 €';
+    $('euros').textContent = nf.format(packs * 100) + ' €';
   }
-  ['p','y','k'].forEach(function(id){$(id).addEventListener('input', calc)});
+  ['p','a','k'].forEach(function(id){$(id).addEventListener('input', calc)});
   calc();
 
   var loadedAt = Date.now();
@@ -290,6 +295,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:14px 26px;justify-content:space-bet
     if (sending) return;
     var prenom = $('prenom').value.trim();
     var email = $('email').value.trim();
+    var tel = $('tel').value.trim();
     var err = $('err');
     err.hidden = true;
     if (Date.now() - loadedAt < 1500) return; // anti-robot : un humain ne valide pas en 1,5 s
@@ -303,17 +309,20 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:14px 26px;justify-content:space-bet
     var data = new URLSearchParams({
       prenom: prenom,
       email: email,
-      neutralite: state.kg,
-      age: state.years,
-      packs: state.pack,
+      telephone: tel,
+      neutralite: 'pese-plastique-pack',
+      age: state.age,
+      packs: state.packs,
+      kg: state.kg,
+      annees: state.years,
       personnes: state.persons,
-      source: 'jfbteam-ma-mission.fr',
-      date: new Date().toISOString()
+      euros: state.euros,
+      date: new Date().toLocaleString('fr-FR', {day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit'})
     });
     function showTicket(){
       try {
         $('t-kg').textContent = nf.format(state.kg);
-        $('t-detail').textContent = state.persons + ' personne' + (state.persons>1?'s':'') + ' sur ' + state.years + ' an' + (state.years>1?'s':'') + '. Pack de compensation : ' + nf.format(state.pack) + ' €.';
+        $('t-detail').textContent = state.persons + ' personne' + (state.persons>1?'s':'') + ' jusqu\'à 80 ans (' + state.years + ' an' + (state.years>1?'s':'') + '). Pour compenser : ' + state.packs + (state.packs>1?' packs':' pack') + ' de 100 € (' + nf.format(state.euros) + ' €).';
         $('t-date').textContent = 'Établi le ' + new Date().toLocaleDateString('fr-FR') + ' pour ' + prenom + '.';
         $('t-name').textContent = prenom;
         $('ask').hidden = true;
