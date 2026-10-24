@@ -3,126 +3,319 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>JFBTeam - Ma Mission : Assainir pour mieux vivre ensemble</title>
-<meta name="description" content="La tâche est immense. Notre impact est infime. On commence quand même. Pèse ton plastique et découvre la neutralité plastique avec preuve CSR26.">
+<title>Jean-François · Peser son plastique, le retirer pour de bon</title>
+<meta name="description" content="Pèse le plastique de ton foyer. Chaque kilo financé est retiré, pesé et tracé. Un projet perso de Jean-François, papyboomer actif.">
+<meta property="og:title" content="Mes petites-filles m'ont demandé ce que je laissais comme planète">
+<meta property="og:description" content="Pèse le plastique de ton foyer. Je t'explique comment je m'en sers moi-même.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Hanken+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--sand:#F6F3EE;--ink:#141414;--green:#0F6D5E;--green2:#E6F2EF;--line:#E8E2D9}
-*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--sand);color:var(--ink);line-height:1.6}
-h1,h2{font-family:Fraunces,Georgia,serif;letter-spacing:-0.02em}
-a{color:var(--green)}header{padding:20px 24px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(246,243,238,.9);backdrop-filter:blur(8px);z-index:10}
-.logo{font-weight:800}.hero{max-width:1100px;margin:0 auto;padding:72px 24px 32px;display:grid;grid-template-columns:1.2fr .8fr;gap:32px}
-@media(max-width:900px){.hero{grid-template-columns:1fr}}
-.kicker{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--green);font-weight:700}
-.hero h1{font-size:clamp(36px,6vw,62px);line-height:.95;margin:12px 0 16px}
-.lead{font-size:18px;color:#3a3a3a;max-width:52ch}
-.card{background:white;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,.04)}
-.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:600px){.calc-grid{grid-template-columns:1fr}}
-label{font-size:13px;font-weight:600;color:#555}
-input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;font-size:16px;margin-top:6px}
-.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 20px;border-radius:999px;background:var(--ink);color:white;text-decoration:none;font-weight:700;border:0;cursor:pointer;width:100%}
-.btn-green{background:var(--green)}
-.result{margin-top:16px;padding:16px;background:var(--green2);border-radius:14px}
-.result b{font-size:22px}
-section{max-width:1100px;margin:0 auto;padding:32px 24px}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-@media(max-width:800px){.steps{grid-template-columns:1fr}}
-.story{columns:2;column-gap:48px}
-@media(max-width:800px){.story{columns:1}}
-.pill{display:inline-block;padding:6px 12px;border-radius:999px;background:var(--green2);color:var(--green);font-size:12px;font-weight:700}
-footer{border-top:1px solid var(--line);padding:32px 24px;text-align:center;color:#777;font-size:13px}
+:root{
+  --paper:#f6f1e7; --ink:#14232b; --sea:#0f4c5c; --sea-dark:#0a3844;
+  --sand:#e8dcc3; --accent:#d9682b; --muted:#5b6b72; --line:#d8cfba; --white:#fffdf8;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:19px;line-height:1.6}
+h1,h2,h3{font-family:'Fraunces',Georgia,serif;line-height:1.15;margin:0 0 .5em;color:var(--sea-dark)}
+h1{font-size:clamp(2rem,5.2vw,3.3rem);font-weight:700}
+h2{font-size:clamp(1.6rem,3.6vw,2.3rem);font-weight:700}
+h3{font-size:1.25rem}
+p{margin:0 0 1em}
+a{color:var(--sea)}
+.wrap{max-width:1020px;margin:0 auto;padding:0 20px}
+.narrow{max-width:700px}
+section{padding:64px 0}
+header.top{padding:16px 0;border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-family:'Fraunces',serif;font-weight:700;color:var(--sea-dark);text-decoration:none;font-size:1.1rem}
+.brand span{font-family:'Hanken Grotesk',sans-serif;font-weight:400;color:var(--muted);font-size:.85rem;margin-left:8px}
+.btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;padding:15px 26px;border-radius:8px;border:0;font-size:1rem;font-family:inherit;cursor:pointer;transition:transform .15s,background .15s}
+.btn:hover{background:#bf5521;transform:translateY(-1px)}
+.btn.small{padding:10px 18px;font-size:.9rem}
+.btn.ghost{background:transparent;color:var(--sea);border:2px solid var(--sea)}
+.btn.ghost:hover{background:var(--sea);color:#fff}
+.hero{padding:56px 0 40px}
+.hero .grid{display:grid;grid-template-columns:1.35fr 1fr;gap:40px;align-items:center}
+.hero .lead{font-size:1.15rem;color:#2c3e47}
+.hero small{display:block;margin-top:12px;color:var(--muted);font-size:.9rem}
+figure{margin:0}
+figure img{width:100%;display:block;border-radius:12px;box-shadow:0 12px 30px rgba(20,35,43,.18);aspect-ratio:4/5;object-fit:cover}
+figcaption{font-size:.85rem;color:var(--muted);margin-top:8px}
+.band{background:var(--sea-dark);color:#eef4f5}
+.band h2,.band h3{color:#fff}
+.band a{color:#ffd9bf}
+.video-box{position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden;background:#000;box-shadow:0 12px 30px rgba(0,0,0,.35)}
+.video-box iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.calc{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:28px;box-shadow:0 8px 24px rgba(20,35,43,.07)}
+.fields{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:18px 0}
+label{display:block;font-size:.9rem;font-weight:700;margin-bottom:6px}
+input[type=number],input[type=text],input[type=email]{width:100%;padding:13px;font-size:1.05rem;border:1px solid #b9ae95;border-radius:8px;background:#fff;font-family:inherit;color:var(--ink)}
+input:focus{outline:3px solid #f2b890;border-color:var(--accent)}
+.result{margin-top:8px;padding:22px;background:var(--sand);border-radius:10px}
+.result .big{font-family:'Fraunces',serif;font-size:2.4rem;font-weight:700;color:var(--sea-dark);line-height:1}
+.result .big small{font-size:1.1rem;font-weight:500}
+.result p{margin:.5em 0 0;color:#3a4a52;font-size:.95rem}
+.ask{margin-top:22px;border-top:1px dashed var(--line);padding-top:22px}
+.ask .row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0}
+.fine{font-size:.82rem;color:var(--muted)}
+.hp{position:absolute;left:-9999px}
+.ticket{border:2px solid var(--sea-dark);border-radius:12px;padding:24px;background:#fff;margin:18px 0}
+.ticket h3{margin-bottom:.2em}
+.ticket .kg{font-family:'Fraunces',serif;font-size:2.6rem;font-weight:700;color:var(--sea-dark)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:28px}
+.step .n{width:42px;height:42px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-family:'Fraunces',serif;font-size:1.2rem}
+.proofs{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px;margin-top:24px}
+.proofs figure img{aspect-ratio:4/3}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.cta-final{text-align:center}
+footer{padding:34px 0;border-top:1px solid var(--line);font-size:.9rem;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:14px 26px;justify-content:space-between}
+[hidden]{display:none!important}
+@media(max-width:760px){
+  body{font-size:18px}
+  section{padding:46px 0}
+  .hero .grid,.two,.steps,.fields,.ask .row{grid-template-columns:1fr}
+  .hero figure{order:-1;max-width:300px}
+  header.top .brand span{display:none}
+}
+@media print{
+  body{background:#fff}
+  header,section:not(#ticket-zone),footer,.noprint{display:none!important}
+  #ticket-zone{display:block!important;padding:0}
+}
 </style>
-<script defer src="https://cloud.umami.is/script.js" data-website-id="49e05859-6636-4e0a-bd40-b7b315f3d51c"></script>
 </head>
 <body>
-<header>
-<div class="logo">jfbteam-ma-mission.fr</div>
-<div><a href="#peser">Pèse-Plastique</a> &nbsp;·&nbsp; <a href="https://jfbteam.substack.com" target="_blank">Mes articles</a></div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#">Jean-François<span>papyboomer actif</span></a>
+    <a class="btn small" href="#peser">Pèse ton plastique</a>
+  </div>
 </header>
 
-<div class="hero">
-<div>
-<div class="kicker">Ma mission : neutralité plastique • Projet perso</div>
-<h1>La tâche est immense.<br>Notre impact est infime.<br>On commence quand même.</h1>
+<main>
 
-<p class="lead">Je m'appelle Jean-François. Depuis tout jeune j'ai la fibre écologie. Depuis 7 ans je suis le dossier plastique. 91% nous échappe. J'ai trouvé un système qui ne triche pas : on finance kilo par kilo, avec preuve blockchain. Je l'utilise moi-même, je te l'explique en 20 minutes.</p>
-
-<div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap">
-<a href="#peser" class="btn btn-green" style="width:auto;padding:14px 28px">Pèse ton plastique →</a>
-<a href="#comment" style="align-self:center">Comment ça marche ?</a>
-</div>
-<p style="margin-top:18px;font-size:13px;color:#666">Mon engagement avant le profit. Le profit est une conséquence de l'engagement.</p>
-</div>
-
-<div class="card" id="peser">
-<h2 style="margin:0 0 8px">Pèse-Plastique</h2>
-<p style="margin:0 0 16px;font-size:14px;color:#555">Ce que mon foyer jette en plastique. Moyenne retenue : 50kg / personne / an. Tu peux ajuster.</p>
-<div class="calc-grid">
-<div><label>Personnes dans le foyer<input id="pers" type="number" value="2" min="1" max="20"></label></div>
-<div><label>Sur combien d'années<input id="annees" type="number" value="1" min="1" max="20"></label></div>
-<div><label>Plastique / pers / an (kg)<input id="kgpers" type="number" value="50"></label></div>
-<div><label>Pack pour compenser</label><div id="pack" style="font-weight:800;font-size:18px;padding:12px 0">—</div></div>
-</div>
-<div class="result">
-<div>Ticket de pesée foyer</div>
-<div><span id="totalAn">—</span> kg / an • <span id="totalPerPers">—</span> kg / pers / an sur la période</div>
-<div style="margin-top:8px"><b id="totalKg">—</b> kg au total → <b id="packEuro">—</b></div>
-<div style="font-size:12px;color:#555;margin-top:6px">1€ = 2,5kg retiré (100€ = 250kg). 5% immédiat, 15% au bout de 6 mois, 30% à un an et 50% au bout de 2 ans.</div>
-</div>
-<a id="cta" href="https://calendar.app.google/k9CgkSML7Ap8617x5" target="_blank" class="btn" style="margin-top:14px">Réserver un échange de 20 min</a>
-<p style="font-size:11px;color:#888;margin-top:10px;text-align:center">Ce simulateur ne calcule aucun gain. Le prix d'un crédit peut monter comme baisser.</p>
-</div>
-</div>
-
-<section id="comment">
-<h2>Comment marche un pack ?</h2>
-<div class="steps">
-<div class="card"><div class="pill">1</div><h3>Tu finances</h3><p>Tu achètes un pack de retrait. 100€ financent le retrait de 250kg de plastique. C'est toi qui déclenches la dépollution.</p></div>
-<div class="card"><div class="pill">2</div><h3>Corsair agit</h3><p>Usines à Nonthaburi (Bangkok) et Finlande : transformation par pyrolyse en huile, revendue aux industriels pour refaire du plastique sans pétrole brut.</p></div>
-<div class="card"><div class="pill">3</div><h3>Tu reçois la preuve</h3><p>Pour chaque commande, reçu numérique traçable : le crédit plastique CSR26. 10 CSR = 1kg. Inscrit sur blockchain, inviolable.</p></div>
-</div>
+<!-- 1. ACCROCHE : une personne, une histoire, un seul geste -->
+<section class="hero">
+  <div class="wrap grid">
+    <div>
+      <h1>Mes petites-filles m'ont demandé ce que je laissais comme planète. Je n'avais pas de réponse.</h1>
+      <p class="lead">Alors j'en ai cherché une que je puisse peser.</p>
+      <p>Depuis sept ans je suis le dossier plastique. J'ai trouvé un système où chaque kilo financé est retiré, pesé et tracé. Je m'en sers moi-même. Je te montre comment.</p>
+      <p><a class="btn" href="#peser">Pèse le plastique de ton foyer</a></p>
+      <small>Deux minutes. Aucun engagement.</small>
+    </div>
+    <!-- Remplace photo-jf.jpg par une vraie photo de toi (format portrait). Si le fichier est absent, le bloc se masque. -->
+    <figure>
+      <img src="photo-jf.jpg" alt="Jean-François, papyboomer actif" onerror="this.closest('figure').hidden=true">
+      <figcaption>Jean-François, 66 ans. Ingénieur, retraité, pas décidé à rester assis.</figcaption>
+    </figure>
+  </div>
 </section>
 
+<!-- 2. VIDEO : s'affiche seulement quand YT_ID est renseigné plus bas dans le script -->
+<section class="band" id="video-zone" hidden>
+  <div class="wrap narrow">
+    <h2>Je te l'explique en face</h2>
+    <div class="video-box" id="video-box"></div>
+  </div>
+</section>
+
+<!-- 3. CALCULATEUR -->
+<section id="peser">
+  <div class="wrap narrow">
+    <h2>Combien pèse le plastique de ton foyer ?</h2>
+    <p>On jette tous du plastique, sans le voir. Moyenne retenue : 50 kg par personne et par an. Tu peux ajuster.</p>
+
+    <div class="calc">
+      <div class="fields">
+        <div><label for="p">Personnes dans le foyer</label><input id="p" type="number" min="1" max="20" value="2" inputmode="numeric"></div>
+        <div><label for="y">Sur combien d'années</label><input id="y" type="number" min="1" max="80" value="10" inputmode="numeric"></div>
+        <div><label for="k">Plastique par personne et par an (kg)</label><input id="k" type="number" min="1" max="300" value="50" inputmode="numeric"></div>
+      </div>
+
+      <div class="result">
+        <div class="big"><span id="kg">1 000</span> <small>kg de plastique</small></div>
+        <p id="packline">Pour le compenser, il faudrait un pack de <strong id="pack">400 €</strong> (1 € finance le retrait de 2,5 kg).</p>
+      </div>
+
+      <div class="ask" id="ask">
+        <h3>Reçois ton ticket de pesée</h3>
+        <p>Je te l'envoie avec trois minutes de vidéo où je te montre la preuve. Tu le garderas, même si tu ne fais rien d'autre.</p>
+        <form id="lead" novalidate>
+          <div class="row">
+            <div><label for="prenom">Ton prénom</label><input id="prenom" type="text" autocomplete="given-name" required></div>
+            <div><label for="email">Ton email</label><input id="email" type="email" autocomplete="email" required></div>
+          </div>
+          <input class="hp" type="text" id="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn" type="submit" id="send">Envoie-moi mon ticket</button>
+          <p class="fine" style="margin-top:12px">Je t'écris moi-même, pas un robot. Tes données restent chez moi. <a href="confidentialite.html">Politique de confidentialité</a>.</p>
+          <p class="fine" id="err" style="color:#b3261e" hidden></p>
+        </form>
+      </div>
+
+      <div id="ticket-zone" hidden>
+        <div class="ticket">
+          <h3>Ticket de pesée foyer</h3>
+          <div class="kg"><span id="t-kg"></span> kg</div>
+          <p id="t-detail" style="margin:.4em 0 0"></p>
+          <p class="fine" id="t-date" style="margin:.6em 0 0"></p>
+        </div>
+        <p><strong>Merci <span id="t-name"></span>.</strong> Je t'écris dans deux jours avec la vidéo.</p>
+        <p>Si tu préfères qu'on en parle tout de suite, voici mon agenda. Vingt minutes, je t'explique comment je m'en sers.</p>
+        <p class="noprint">
+          <a class="btn" href="https://calendar.app.google/k9CgkSML7Ap8617x5" target="_blank" rel="noopener">Réserver 20 minutes</a>
+          <button class="btn ghost" type="button" onclick="window.print()" style="margin-left:8px">Imprimer mon ticket</button>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. COMMENT CA MARCHE -->
+<section class="band">
+  <div class="wrap">
+    <h2>Comment ça marche</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="n">1</div>
+        <h3>Tu finances</h3>
+        <p>Tu prends un pack de retrait. 100 € financent le retrait de 250 kg de plastique. C'est toi qui déclenches.</p>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <h3>Corsair retire</h3>
+        <p>Dans ses usines de Nonthaburi, près de Bangkok, et en Finlande, le plastique est transformé par pyrolyse en huile. Les industriels la rachètent pour refaire du plastique sans pétrole brut.</p>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <h3>Tu reçois la preuve</h3>
+        <p>Pour chaque commande, un reçu numérique : le crédit plastique CSR26. 10 CSR correspondent à 1 kg. Il est inscrit sur une blockchain, donc impossible à modifier après coup.</p>
+      </div>
+    </div>
+    <p style="margin-top:28px">Un point de calendrier, pour être clair : Corsair traite tout de suite 5 % du plastique que tu finances. Le reste est retiré progressivement sur deux ans. Il s'agit du retrait du plastique, pas d'un rendement pour toi.</p>
+  </div>
+</section>
+
+<!-- 5. PREUVES : chaque bloc se masque tout seul si l'image est absente. Ajoute usine.jpg et recu-csr.jpg. -->
 <section>
-<h2>Pour les curieux : le crédit plastique CSR</h2>
-<div class="story">
-<p>Dans certains pays (Inde, Philippines, Corée), la loi oblige les producteurs à compenser leur plastique (REP). La Banque mondiale a émis 100M$ d'obligations liées aux crédits plastiques.</p>
-<p>D'après Corsair, l'offre de crédits reste très faible face aux besoins. Corsair consacre une part de ses revenus au rachat de ses propres crédits sur le marché.</p>
-<p><b>Hypothèses du calcul :</b> 1€ = 2,5kg • 5% au départ, 15% à 6 mois, 30% à 1 an, 50% à 2 ans • 50kg/pers/an par défaut • Pack arrondi à la centaine au-dessus • Montants en euros.</p>
-<p><b>Pour des particuliers qui me ressemblent :</b> qui veulent assainir la planète pour mieux vivre ensemble. Pas besoin d'être parfait, juste de commencer.</p>
-</div>
+  <div class="wrap">
+    <h2>Ce que tu peux vérifier</h2>
+    <p>Je ne te demande pas de me croire sur parole. Regarde.</p>
+    <div class="proofs">
+      <figure><img src="usine.jpg" alt="Usine de pyrolyse de Nonthaburi" onerror="this.closest('figure').hidden=true"><figcaption>L'usine de Nonthaburi, près de Bangkok.</figcaption></figure>
+      <figure><img src="recu-csr.jpg" alt="Exemple de reçu CSR26" onerror="this.closest('figure').hidden=true"><figcaption>Un reçu CSR26 (nom masqué).</figcaption></figure>
+    </div>
+    <!-- À SOURCER avant publication : ajouter un lien pour chaque chiffre avancé sur la loi REP (Inde, Philippines, Corée)
+         et sur les 100 M$ d'obligations de la Banque mondiale. Sans lien, je préfère retirer la phrase. -->
+    <p style="margin-top:26px">Dans plusieurs pays, dont l'Inde, les Philippines et la Corée, la loi oblige les producteurs à compenser le plastique qu'ils mettent sur le marché. C'est pour ça qu'un crédit plastique a une valeur. D'après Corsair, l'offre de crédits reste très faible face au besoin.</p>
+  </div>
 </section>
 
-<section style="background:white;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
-<div style="max-width:700px;margin:0 auto;text-align:center;padding:16px">
-<h2>Si ça te parle, parlons-en</h2>
-<p>Pas de tunnel. 20-30 minutes pour t'expliquer cette nouvelle économie, comment je m'en sers, et si tu veux faire pareil.</p>
-<a class="btn btn-green" href="https://calendar.app.google/k9CgkSML7Ap8617x5" target="_blank" style="max-width:320px;margin:16px auto;display:flex">Je veux en savoir plus</a>
-</div>
+<!-- 6. POUR QUI / POUR QUI PAS + TRANSPARENCE -->
+<section style="background:var(--sand)">
+  <div class="wrap two">
+    <div>
+      <h2>Pour qui</h2>
+      <p>Pour quelqu'un qui me ressemble. Qui regarde ses enfants ou ses petits-enfants et se dit qu'il faut commencer quelque part. Pas besoin d'être parfait.</p>
+      <p>Tu veux d'abord comprendre ? Parfait. Je préfère ça à un oui trop rapide.</p>
+    </div>
+    <div>
+      <h2>Pas pour qui</h2>
+      <p>Ce n'est pas un placement. Je ne te promets aucun gain. Le prix d'un crédit peut monter comme baisser.</p>
+      <p>Je touche une commission sur les packs. Je te le dis avant que tu me le demandes. Je me suis déjà fait avoir, j'ai failli perdre de bons potes dans un projet qui a fini par tomber. Je ne referai pas ça.</p>
+    </div>
+  </div>
 </section>
+
+<section class="cta-final">
+  <div class="wrap narrow">
+    <h2>La tâche est immense. On commence quand même.</h2>
+    <p>Pèse ton plastique. Le reste vient après, si tu veux.</p>
+    <p><a class="btn" href="#peser">Pèse le plastique de ton foyer</a></p>
+  </div>
+</section>
+
+</main>
 
 <footer>
-<p>Transformer la planète · <a href="confidentialite.html">Politique de confidentialité</a> · <a href="mentions-legales.html">Mentions légales</a></p>
+  <div class="wrap">
+    <span>Jean-François · Projet personnel</span>
+    <span><a href="https://jfbteam.substack.com">Mes articles</a> · <a href="confidentialite.html">Confidentialité</a> · <a href="mentions-legales.html">Mentions légales</a></span>
+  </div>
 </footer>
 
 <script>
-function calc(){
-const pers = parseFloat(document.getElementById('pers').value)||0;
-const annees = parseFloat(document.getElementById('annees').value)||0;
-const kgpers = parseFloat(document.getElementById('kgpers').value)||50;
-const totalAn = pers*kgpers;
-const totalKg = totalAn*annees;
-const packKg = totalKg;
-const eurosBrut = packKg/2.5;
-const euros = Math.ceil(eurosBrut/100)*100;
-document.getElementById('totalAn').textContent = totalAn.toFixed(0);
-document.getElementById('totalPerPers').textContent = kgpers.toFixed(0);
-document.getElementById('totalKg').textContent = totalKg.toFixed(0);
-document.getElementById('pack').textContent = euros>0 ? euros+' €' : '—';
-document.getElementById('packEuro').textContent = euros>0 ? euros+' € → '+ (euros*2.5).toFixed(0)+' kg à retirer' : '—';
-}
-['pers','annees','kgpers'].forEach(id=>document.getElementById(id).addEventListener('input',calc));
-calc();
+(function(){
+  // ====== RÉGLAGES ======
+  // Vidéo : colle ici l'identifiant YouTube (la partie après v=). Laisse vide tant que la vidéo n'est pas prête.
+  var YT_ID = 'DYfC5sywTFY';
+  // Webhook Apps Script : à vérifier (déploiement qui alimente neutralité, age, packs).
+  var WEBHOOK = 'https://script.google.com/macros/s/AKfycbw3R3__BWsSfFcY7BAQ3xWJ97_ZnJ8n1EcWROJyONEkSzCySEWBmRBhDmZU4NTv3ue4-Q/exec';
+  // =======================
+
+  var $ = function(id){return document.getElementById(id)};
+  var nf = new Intl.NumberFormat('fr-FR');
+
+  if (YT_ID) {
+    $('video-box').innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + YT_ID + '" title="Jean-François explique" allowfullscreen loading="lazy"></iframe>';
+    $('video-zone').hidden = false;
+  }
+
+  var state = {kg:0, years:0, persons:0, pack:0};
+  function calc(){
+    var p = Math.max(1, +$('p').value || 1);
+    var y = Math.max(1, +$('y').value || 1);
+    var k = Math.max(1, +$('k').value || 1);
+    var kg = Math.round(p * y * k);
+    var pack = Math.max(100, Math.ceil(kg / 2.5 / 100) * 100);
+    state = {kg:kg, years:y, persons:p, pack:pack};
+    $('kg').textContent = nf.format(kg);
+    $('pack').textContent = nf.format(pack) + ' €';
+  }
+  ['p','y','k'].forEach(function(id){$(id).addEventListener('input', calc)});
+  calc();
+
+  var sending = false;
+  $('lead').addEventListener('submit', function(e){
+    e.preventDefault();
+    if (sending) return;
+    var prenom = $('prenom').value.trim();
+    var email = $('email').value.trim();
+    var err = $('err');
+    err.hidden = true;
+    if ($('website').value) return; // piège anti-robots
+    if (!prenom || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      err.textContent = 'Il me faut ton prénom et un email valide.';
+      err.hidden = false;
+      return;
+    }
+    sending = true;
+    $('send').textContent = 'Envoi…';
+    var data = new URLSearchParams({
+      prenom: prenom,
+      email: email,
+      neutralite: state.kg,
+      age: state.years,
+      packs: state.pack,
+      personnes: state.persons,
+      source: 'jfbteam-ma-mission.fr',
+      date: new Date().toISOString()
+    });
+    fetch(WEBHOOK, {method:'POST', mode:'no-cors', body:data}).catch(function(){}).then(function(){
+      $('t-kg').textContent = nf.format(state.kg);
+      $('t-detail').textContent = state.persons + ' personne' + (state.persons>1?'s':'') + ' sur ' + state.years + ' an' + (state.years>1?'s':'') + '. Pack de compensation : ' + nf.format(state.pack) + ' €.';
+      $('t-date').textContent = 'Établi le ' + new Date().toLocaleDateString('fr-FR') + ' pour ' + prenom + '.';
+      $('t-name').textContent = prenom;
+      $('ask').hidden = true;
+      $('ticket-zone').hidden = false;
+      $('ticket-zone').scrollIntoView({behavior:'smooth', block:'center'});
+    });
+  });
+})();
 </script>
 </body>
 </html>
