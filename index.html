@@ -52,6 +52,12 @@ header.top .wrap{display:flex;align-items:center;justify-content:space-between;g
 figure{margin:0}
 figure img{width:100%;height:auto;display:block;border-radius:12px;box-shadow:0 12px 30px rgba(20,35,43,.18);aspect-ratio:4/5;object-fit:cover}
 figcaption{font-size:.85rem;color:var(--muted);margin-top:8px}
+.hero figure.vid{max-width:340px;justify-self:center;width:100%}
+.vwrap{position:relative;border-radius:12px;overflow:hidden;box-shadow:0 12px 30px rgba(20,35,43,.18);background:#000}
+.vwrap video{display:block;width:100%;height:auto;aspect-ratio:9/16;background:#000}
+.play{position:absolute;inset:0;margin:auto;width:84px;height:84px;border-radius:50%;border:0;background:var(--accent);color:#fff;font-size:2rem;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;padding:0 0 0 6px}
+.play:hover{background:#bf5521}
+.play.gone{display:none}
 .band{background:var(--sea-dark);color:#eef4f5}
 .band h2,.band h3{color:#fff}
 .band a{color:#ffd9bf}
@@ -93,7 +99,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:14px 26px;justify-content:space-bet
   body{font-size:18px;padding-bottom:72px}
   section{padding:46px 0}
   .hero .grid,.two,.steps,.fields,.ask .row{grid-template-columns:1fr}
-  .hero figure{order:-1;max-width:300px}
+  .hero figure.vid{max-width:300px}
   header.top .brand span{display:none}
   .calc{padding:20px}
   .sticky.on{display:block}
@@ -139,9 +145,14 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:14px 26px;justify-content:space-bet
       <p><a class="btn" href="#peser" data-umami-event="cta-hero">Pèse le plastique de ton foyer</a></p>
       <small>Deux minutes. Ticket gratuit. Aucun engagement.</small>
     </div>
-    <!-- Ajoute photo-jf.jpg (portrait) à la racine du dépôt : une vraie photo de toi. Si le fichier est absent, le bloc se masque. -->
-    <figure>
-      <img src="photo-jf.jpg" alt="Jean-François, papyboomer actif" width="800" height="1000" onerror="this.closest('figure').hidden=true">
+    <!-- Vidéo de présentation (verticale, 90 s). Elle ne se charge qu'au clic sur lecture. -->
+    <figure class="vid">
+      <div class="vwrap">
+        <video id="hero-video" controls playsinline preload="none" poster="jf-poster.jpg" width="720" height="1280">
+          <source src="jf-presentation.mp4" type="video/mp4">
+        </video>
+        <button class="play" id="hero-play" type="button" aria-label="Lancer la vidéo de Jean-François"><span>▶</span></button>
+      </div>
       <figcaption>Jean-François, 66 ans. Ingénieur, retraité, pas décidé à rester assis.</figcaption>
     </figure>
   </div>
@@ -329,6 +340,16 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:14px 26px;justify-content:space-bet
     });
   });
   calc();
+
+  // Vidéo d'accroche : bouton lecture + mesure (lecture, fin)
+  var hv = $('hero-video'), hp = $('hero-play'), played = false;
+  hp.addEventListener('click', function(){ hv.play(); });
+  hv.addEventListener('play', function(){
+    hp.classList.add('gone');
+    if (!played) { played = true; track('video-play'); }
+  });
+  hv.addEventListener('pause', function(){ if (!hv.ended && hv.currentTime < 0.5) hp.classList.remove('gone'); });
+  hv.addEventListener('ended', function(){ track('video-end'); hp.classList.remove('gone'); });
 
   // Barre fixe mobile
   var submitted = false;

@@ -6,7 +6,7 @@ self.addEventListener('activate', e => {
   self.clients.claim();
 });
 self.addEventListener('fetch', e => {
-  if (e.request.method !== 'GET') return;
+  if (e.request.method !== 'GET' || e.request.headers.has('range')) return; // laisse le navigateur gérer la vidéo
   e.respondWith(
     fetch(e.request).then(r => {
       const copy = r.clone();
